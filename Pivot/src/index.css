@@ -5,17 +5,17 @@
 }
 
 body {
-  background-color: #f3f3f3;
+  /* background-color: #0a0919; */
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .app-container {
+
   width: 90%;
   margin: auto;
 }
 
 h2 {
-
   text-align: center;
 }
 
@@ -25,7 +25,6 @@ input[type="file"] {
 }
 
 /* table */
-
 
 section {
   padding: 2rem;
@@ -46,7 +45,7 @@ h2 {
 }
 
 .table-container {
-  overflow-x: auto;
+  overflow: auto;
   background-color: white;
   padding: 1rem;
   border-radius: 0.3rem;
@@ -57,6 +56,7 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
+
 
 th,
 td {
@@ -79,6 +79,7 @@ tr:nth-child(even) {
 
 .boxes {
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
   margin: 20px 0;
 }
@@ -88,6 +89,7 @@ tr:nth-child(even) {
   min-height: 180px;
   border: 2px dashed #aaa;
   border-radius: 5px;
+
   padding: 10px;
   background: #fdfdfd;
 }
@@ -102,13 +104,13 @@ tr:nth-child(even) {
   margin: 4px 0;
   background: #6180ec;
   border-radius: 3px;
-  cursor: grab;
+  cursor: move;
   color: #fafafa;
 }
 
 .item:active {
-  cursor: grabbing;
-  background: #e2e2e2;
+  cursor: move;
+  /* background: #e2e2e2; */
 }
 
 .aggregation {
@@ -146,3 +148,35 @@ tr:nth-child(even) {
   padding: 8px;
   text-align: center;
 }
+
+@media (max-width:750px){
+
+  .app-container {
+    width: 100vw;
+    margin: 0;
+  }
+  .table-container {
+    width: 100%;
+    margin: auto;
+    overflow: auto;
+  }
+  .table-container table{
+    /* width: 100%; */
+  }
+  .boxes {
+    flex-direction: column;
+  }
+  .boxes .box{
+    margin: 0.5rem 0;
+  }
+  .pivot-table{
+    overflow: auto;
+  }
+  .pivot-table th{
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+}
+
+

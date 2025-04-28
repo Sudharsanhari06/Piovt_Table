@@ -35,6 +35,7 @@ const App = () => {
     const { source, destination } = result;
   
     if (!destination) return; // If dropped outside, do nothing
+
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
   
     const sourceList = getListById(source.droppableId);
@@ -42,7 +43,7 @@ const App = () => {
   
     const [movedItem] = sourceList.splice(source.index, 1); // remove item from source
     destinationList.splice(destination.index, 0, movedItem); // add item to destination
-  
+
     // Update the state
     setFields([...fields]);
     setRows([...rows]);
@@ -66,15 +67,14 @@ const App = () => {
     }
   };
   
-
-  const updateList = (id, list) => {
-    switch (id) {
-      case "fields": setFields(list); break;
-      case "rows": setRows(list); break;
-      case "columns": setColumns(list); break;
-      case "values": setValues(list); break;
-    }
-  };
+  // const updateList = (id, list) => {
+  //   switch (id) {
+  //     case "fields": setFields(list); break;
+  //     case "rows": setRows(list); break;
+  //     case "columns": setColumns(list); break;
+  //     case "values": setValues(list); break;
+  //   }
+  // };
 
   // const removeItem = (id, item) => {
   //   const list = getList(id).filter((f) => f !== item);
@@ -137,17 +137,17 @@ const App = () => {
       )}
 
       {/* Drag and drop pivot section */}
+  
       {data.length > 0 && (
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="boxes">
-
             {/* Fields */}
             <Droppable droppableId="fields">
               {(provided) => (
                 <div className="box" ref={provided.innerRef} {...provided.droppableProps}>
                   <h4>Fields</h4>
                   {fields.map((f, i) => (
-                    <Draggable key={f} draggableId={f} index={i}>
+              <Draggable key={f} draggableId={f}    index={i}>
                       {(prov) => (
                         <div
                           ref={prov.innerRef}
@@ -203,8 +203,7 @@ const App = () => {
                           {...prov.draggableProps}
                           {...prov.dragHandleProps}
                           className="item columns-item"
-                        >
-                          {f}
+                        >{f}
                           <span className="close-btn" onClick={() => removeItem("columns", f)}>×</span>
                         </div>
                       )}
@@ -228,8 +227,7 @@ const App = () => {
                           {...prov.draggableProps}
                           {...prov.dragHandleProps}
                           className="item values-item"
-                        >
-                          {f}
+                        >{f}
                           <span className="close-btn" onClick={() => removeItem("values", f)}>×</span>
                         </div>
                       )}
@@ -252,7 +250,6 @@ const App = () => {
             </Droppable>
 
           </div>
-
           {/* Pivot Table with Row and Column Totals */}
           <PivotTable
             data={data}

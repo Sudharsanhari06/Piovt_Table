@@ -1,98 +1,120 @@
+// PivotTable.jsx
 import React from "react";
+import "./App.css";
 
-function PivotTable({ data, rows, columns, values, aggregation }) {
-  if (!data || data.length === 0) {
-    return <div>No data loaded</div>;
+const PivotTable = ({
+  data,
+  rows,
+  columns,
+  values,
+  aggregation,
+}) => {
+  if (!data.length) return null;
+  if (!rows.length || !columns.length || !values.length) {
+    return (
+      <div style={{ color: "gray", marginTop: 20 }}>
+        Drag at least 1 Row, 1 Column and 1 Value.
+      </div>
+    );
   }
 
-  if (rows.length === 0 || columns.length === 0 || values.length === 0) {
-    return <div style={{ color: "gray" }}>Please drag at least one Row, one Column, and one Value.</div>;
-  }
+  // 1) Build unique row-keys and col-keys
+  const rowKeys = [
+    ...new Set(
+      data.map((item) => rows.map((r) => item[r]).join(" | "))
+    ),
+  ];
+  const colKeys = [
+    ...new Set(
+      data.map((item) => columns.map((c) => item[c]).join(" | "))
+    ),
+  ];
 
+  // 2) Initialize pivot structure
   const pivot = {};
-
-  data.forEach((row) => {
-    const rowKey = rows.map((r) => row[r]).join("|");
-    const columnKey = columns.map((c) => row[c]).join("|");
-
-    if (!pivot[rowKey]) {
-      pivot[rowKey] = {};
-    }
-    if (!pivot[rowKey][columnKey]) {
-      pivot[rowKey][columnKey] = [];
-    }
-    
-    const val = parseFloat(row[values[0]]) || 0;
-    pivot[rowKey][columnKey].push(val);
+  rowKeys.forEach((rk) => {
+    pivot[rk] = {};
+    colKeys.forEach((ck) => {
+      pivot[rk][ck] = [];
+    });
   });
 
-  const aggregate = (values) => {
-    switch (aggregation) {
-      case "sum":
-        return values.reduce((a, b) => a + b, 0);
-      case "count":
-        return values.length;
-      case "avg":
-        return values.reduce((a, b) => a + b, 0) / values.length;
-      default:
-        return 0;
+  // 3) Fill pivot with numeric values
+  data.forEach((item) => {
+    const rk = rows.map((r) => item[r]).join(" | ");
+    const ck = columns.map((c) => item[c]).join(" | ");
+    const raw = item[values[0]];
+    const num = Number(raw);
+    if (!isNaN(num)) pivot[rk][ck].push(num);
+  });
+
+  // 4) Aggregation function
+  const aggregate = (arr) => {
+    if (aggregation === "Sum") {
+      return arr.reduce((a, b) => a + b, 0);
     }
+    if (aggregation === "Avg") {
+      return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+    if (aggregation === "Count") {
+      return arr.length;
+    }
+    return 0;
   };
 
-  const uniqueColumns = Array.from(
-    new Set(
-      data.map((row) => columns.map((c) => row[c]).join("|"))
-    )
+  // 5) Compute row totals & col totals
+  const rowTotals = rowKeys.map((rk) =>
+    colKeys.reduce((sum, ck) => sum + aggregate(pivot[rk][ck]), 0)
   );
-
-  const uniqueRows = Array.from(
-    new Set(
-      data.map((row) => rows.map((r) => row[r]).join("|"))
-    )
+  const colTotals = colKeys.map((ck) =>
+    rowKeys.reduce((sum, rk) => sum + aggregate(pivot[rk][ck]), 0)
   );
+  const grandTotal = rowTotals.reduce((a, b) => a + b, 0);
 
   return (
-    <section className="pivot-table">
+    <div className="pivot-table">
       <table>
         <thead>
           <tr>
             <th >{rows.join(", ")}</th>
-            {uniqueColumns.map((col) => (
-              <th key={col}>
-                {col}
+            {colKeys.map((ck) => (
+              <th key={ck}>
+                {ck}
               </th>
             ))}
+            <th >Row Total</th>
           </tr>
-
         </thead>
         <tbody>
-          {uniqueRows.map((rowKey) => (
-            <tr key={rowKey}>
-              <td >{rowKey}</td>
-              {uniqueColumns.map((colKey) => (
-                <td key={colKey}>
-                  {pivot[rowKey] && pivot[rowKey][colKey]
-                    ? aggregate(pivot[rowKey][colKey]).toFixed(2)
-                    : "-"}
+          {rowKeys.map((rk, ri) => (
+            <tr key={rk}>
+              <td >{rk}</td>
+              {colKeys.map((ck) => (
+                <td key={ck}>
+                  {aggregate(pivot[rk][ck]).toFixed(0)}
                 </td>
               ))}
+              <td>
+                {rowTotals[ri].toFixed(0)}
+              </td>
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td>Column Total</td>
+            {colTotals.map((ct, i) => (
+              <td key={i} >
+                {ct.toFixed(0)}
+              </td>
+            ))}
+            <td>
+              {grandTotal.toFixed(0)}
+            </td>
+          </tr>
+        </tfoot>
       </table>
-    </section>
+    </div>
   );
-}
-
-// const thStyle = {
-//   border: "1px solid #ccc",
-//   padding: "8px",
-//   backgroundColor: "#f0f0f0",
-// };
-
-// const tdStyle = {
-//   border: "1px solid #ccc",
-//   padding: "8px",
-// };
-
+};
 export default PivotTable;
