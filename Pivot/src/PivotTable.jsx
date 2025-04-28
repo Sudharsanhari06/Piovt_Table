@@ -21,7 +21,7 @@ function PivotTable({ data, rows, columns, values, aggregation }) {
     if (!pivot[rowKey][columnKey]) {
       pivot[rowKey][columnKey] = [];
     }
-
+    
     const val = parseFloat(row[values[0]]) || 0;
     pivot[rowKey][columnKey].push(val);
   });
@@ -52,50 +52,47 @@ function PivotTable({ data, rows, columns, values, aggregation }) {
   );
 
   return (
-    <table
-      style={{
-        width: "100%",
-        borderCollapse: "collapse",
-        textAlign: "center",
-      }}
-    >
-      <thead>
-        <tr>
-          <th style={thStyle}>{rows.join(", ")}</th>
-          {uniqueColumns.map((col) => (
-            <th key={col} style={thStyle}>
-              {col}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {uniqueRows.map((rowKey) => (
-          <tr key={rowKey}>
-            <td style={tdStyle}>{rowKey}</td>
-            {uniqueColumns.map((colKey) => (
-              <td key={colKey} style={tdStyle}>
-                {pivot[rowKey] && pivot[rowKey][colKey]
-                  ? aggregate(pivot[rowKey][colKey]).toFixed(2)
-                  : "-"}
-              </td>
+    <section className="pivot-table">
+      <table>
+        <thead>
+          <tr>
+            <th >{rows.join(", ")}</th>
+            {uniqueColumns.map((col) => (
+              <th key={col}>
+                {col}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+
+        </thead>
+        <tbody>
+          {uniqueRows.map((rowKey) => (
+            <tr key={rowKey}>
+              <td >{rowKey}</td>
+              {uniqueColumns.map((colKey) => (
+                <td key={colKey}>
+                  {pivot[rowKey] && pivot[rowKey][colKey]
+                    ? aggregate(pivot[rowKey][colKey]).toFixed(2)
+                    : "-"}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
   );
 }
 
-const thStyle = {
-  border: "1px solid #ccc",
-  padding: "8px",
-  backgroundColor: "#f0f0f0",
-};
+// const thStyle = {
+//   border: "1px solid #ccc",
+//   padding: "8px",
+//   backgroundColor: "#f0f0f0",
+// };
 
-const tdStyle = {
-  border: "1px solid #ccc",
-  padding: "8px",
-};
+// const tdStyle = {
+//   border: "1px solid #ccc",
+//   padding: "8px",
+// };
 
 export default PivotTable;

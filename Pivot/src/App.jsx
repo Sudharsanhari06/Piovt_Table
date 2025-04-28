@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from "react";
 import Papa from "papaparse";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
@@ -12,6 +11,7 @@ const App = () => {
   const [columns, setColumns] = useState([]);
   const [values, setValues] = useState([]);
   const [aggregation, setAggregation] = useState("Sum");
+
 
   const handleCSVUpload = (e) => {
     const file = e.target.files[0];
@@ -30,25 +30,42 @@ const App = () => {
     });
   };
 
-  const onDragEnd = ({ source, destination }) => {
-    if (!destination) return;
-    const sourceList = Array.from(getList(source.droppableId));
-    const destList = Array.from(getList(destination.droppableId));
-    const [moved] = sourceList.splice(source.index, 1);
-    destList.splice(destination.index, 0, moved);
-    updateList(source.droppableId, sourceList);
-    updateList(destination.droppableId, destList);
-  };
 
-  const getList = (id) => {
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+  
+    if (!destination) return; // If dropped outside, do nothing
+    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+  
+    const sourceList = getListById(source.droppableId);
+    const destinationList = getListById(destination.droppableId);
+  
+    const [movedItem] = sourceList.splice(source.index, 1); // remove item from source
+    destinationList.splice(destination.index, 0, movedItem); // add item to destination
+  
+    // Update the state
+    setFields([...fields]);
+    setRows([...rows]);
+    setColumns([...columns]);
+    setValues([...values]);
+  };
+  
+  // helper to get correct list by id
+  const getListById = (id) => {
     switch (id) {
-      case "fields": return fields;
-      case "rows": return rows;
-      case "columns": return columns;
-      case "values": return values;
-      default: return [];
+      case "fields":
+        return fields;
+      case "rows":
+        return rows;
+      case "columns":
+        return columns;
+      case "values":
+        return values;
+      default:
+        return [];
     }
   };
+  
 
   const updateList = (id, list) => {
     switch (id) {
@@ -59,16 +76,36 @@ const App = () => {
     }
   };
 
-  const removeItem = (id, item) => {
-    const list = getList(id).filter((f) => f !== item);
-    updateList(id, list);
-    setFields((prev) => [...prev, item]); // Return item to "Fields"
+  // const removeItem = (id, item) => {
+  //   const list = getList(id).filter((f) => f !== item);
+  //   updateList(id, list);
+  //   setFields((prev) => [...prev, item]); // Return item to "Fields"
+  // };
+
+
+
+  const removeItem = (section, item) => {
+    switch (section) {
+      case 'rows':
+        setRows(rows.filter((row) => row !== item));
+        break;
+      case 'columns':
+        setColumns(columns.filter((column) => column !== item));
+        break;
+      case 'values':
+        setValues(values.filter((value) => value !== item));
+        break;
+      default:
+        break;
+    }
   };
+  
+
 
   return (
     <div className="app-container">
-      <h2>CSV Table To Pivot Table</h2>
-      <input type="file" accept=".csv" onChange={handleCSVUpload} />
+     <h2>CSV Table To Pivot Table</h2>
+    <input type="file" accept=".csv" onChange={handleCSVUpload} />
 
       {/* Show simple table preview */}
       {data.length > 0 && (

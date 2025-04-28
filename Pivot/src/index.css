@@ -1,16 +1,80 @@
+* {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f3f3f3;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .app-container {
-  font-family: Arial, sans-serif;
   width: 90%;
-  margin: 20px auto;
+  margin: auto;
 }
 
 h2 {
+
   text-align: center;
 }
 
 input[type="file"] {
   display: block;
   margin: 20px auto;
+}
+
+/* table */
+
+
+section {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+}
+
+input[type="file"] {
+  margin-bottom: 1rem;
+}
+
+h2 {
+  margin-top: 1.5rem;
+}
+
+.csv-preview h2 {
+  margin-bottom: 0.5rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 2px solid #ddd;
+  text-align: left;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+
+th {
+  background-color: #6180ec;
+  font-weight: bold;
+  color: #fafafa;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
 }
 
 .boxes {
@@ -36,9 +100,10 @@ input[type="file"] {
 .item {
   padding: 6px 8px;
   margin: 4px 0;
-  background: #f4f4f4;
+  background: #6180ec;
   border-radius: 3px;
   cursor: grab;
+  color: #fafafa;
 }
 
 .item:active {
@@ -52,22 +117,6 @@ input[type="file"] {
   padding: 4px;
 }
 
-.pivot-table table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.pivot-table th,
-.pivot-table td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-}
-
-.pivot-table th {
-  background: #f0f0f0;
-}
 .close-btn {
   float: right;
   color: red;
@@ -75,52 +124,25 @@ input[type="file"] {
   cursor: pointer;
   margin-left: 8px;
 }
+
 .close-btn:hover {
   color: darkred;
 }
 
-section {
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
-}
-
-input[type="file"] {
-  margin-bottom: 1rem;
-}
-
-h2 {
-  margin-top: 1.5rem;
-}
-
-.table-container {
-  overflow-x: auto;
-  background-color: white;
-  padding: 1rem;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-table {
-  border-collapse: collapse;
+.pivot-table table {
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: center;
 }
 
-th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
+.pivot-table table th {
+  background-color: #6180ec;
 }
 
-th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.whole-container {
-  margin-top: 1rem;
+.pivot-table th,
+.pivot-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
 }
