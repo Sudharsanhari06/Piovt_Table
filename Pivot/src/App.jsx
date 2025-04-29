@@ -66,38 +66,20 @@ const App = () => {
         return [];
     }
   };
+
+
   
-  // const updateList = (id, list) => {
-  //   switch (id) {
-  //     case "fields": setFields(list); break;
-  //     case "rows": setRows(list); break;
-  //     case "columns": setColumns(list); break;
-  //     case "values": setValues(list); break;
-  //   }
-  // };
-
-  // const removeItem = (id, item) => {
-  //   const list = getList(id).filter((f) => f !== item);
-  //   updateList(id, list);
-  //   setFields((prev) => [...prev, item]); // Return item to "Fields"
-  // };
-
-
-
-  const removeItem = (section, item) => {
-    switch (section) {
-      case 'rows':
-        setRows(rows.filter((row) => row !== item));
-        break;
-      case 'columns':
-        setColumns(columns.filter((column) => column !== item));
-        break;
-      case 'values':
-        setValues(values.filter((value) => value !== item));
-        break;
-      default:
-        break;
+  const removeItem = (section, fieldName) => {
+    if (section === "rows") {
+      setRows(prev => prev.filter(f => f !== fieldName));
     }
+    if (section === "columns") {
+      setColumns(prev => prev.filter(f => f !== fieldName));
+    }
+    if (section === "values") {
+      setValues(prev => prev.filter(f => f !== fieldName));
+    }
+    setFields(prev => [...prev, fieldName]); // <-- important: Add back to Fields
   };
   
 

@@ -104,13 +104,12 @@ tr:nth-child(even) {
   margin: 4px 0;
   background: #6180ec;
   border-radius: 3px;
-  cursor: move;
+  cursor: grab;
   color: #fafafa;
 }
 
 .item:active {
-  cursor: move;
-  /* background: #e2e2e2; */
+  cursor: grab;
 }
 
 .aggregation {
@@ -149,34 +148,38 @@ tr:nth-child(even) {
   text-align: center;
 }
 
-@media (max-width:750px){
+@media (max-width:750px) {
 
   .app-container {
     width: 100vw;
     margin: 0;
   }
+
   .table-container {
     width: 100%;
     margin: auto;
     overflow: auto;
   }
-  .table-container table{
+
+  .table-container table {
     /* width: 100%; */
   }
+
   .boxes {
     flex-direction: column;
   }
-  .boxes .box{
+
+  .boxes .box {
     margin: 0.5rem 0;
   }
-  .pivot-table{
+
+  .pivot-table {
     overflow: auto;
   }
-  .pivot-table th{
+
+  .pivot-table th {
     font-size: 0.9rem;
     font-weight: 600;
   }
 
 }
-
-
