@@ -22,7 +22,7 @@ const PivotTable = ({
     window.print();
   }
 
-  // 1) Build unique row-keys and col-keys
+  //   unique row and col
   const rowKeys = [
     ...new Set(
       data.map((item) => rows.map((r) => item[r]).join(" | "))
@@ -66,7 +66,7 @@ const PivotTable = ({
     return 0;
   };
 
-  // 5) Compute row totals & col totals
+  //  row and col totals
   const rowTotals = rowKeys.map((rk) =>
     colKeys.reduce((sum, ck) => sum + aggregate(pivot[rk][ck]), 0)
   );
