@@ -16,9 +16,6 @@ const App = () => {
   // const[print,setPrinr]=useState(false);
 
 
-const windowPrint=()=>{
-  window.print();
-}
 
   const handleCSVUpload = (e) => {
     const file = e.target.files[0];
@@ -100,10 +97,10 @@ const windowPrint=()=>{
 
       <h2>CSV Table To Pivot Table</h2>
       <input type="file" accept=".csv" onChange={handleCSVUpload} />
-      
+
       {/* loader */}
-        {loading && <Loader />}
-        
+      {loading && <Loader />}
+
       {/* Show simple table preview */}
       {data.length > 0 && (
         <section className="csv-preview">
@@ -257,7 +254,6 @@ const windowPrint=()=>{
             aggregation={aggregation}
             showTotals={true}
           />
-        <button onClick={windowPrint} className="print-btn">Print</button>
         </DragDropContext>
       )}
     </div>

@@ -55,7 +55,7 @@ h2 {
 .table-container {
   overflow: auto;
   background-color: transparent;
-  height: auto;
+  max-height: 100vh;
   /* padding: 1rem; */
   border-radius: 0.3rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -97,19 +97,19 @@ tr:nth-child(even) {
   border: 2px dashed #aaa;
   border-radius: 5px;
   padding: 10px;
-  background: #fdfdfd;
+  background: #23272f;
 }
 
 .box h4 {
   margin: 0 0 10px;
   text-align: center;
-  color: #16181d;
+  color: #f7f7f7;
 }
 
 .item {
   padding: 6px 8px;
   margin: 4px 0;
-  background: #6180ec;
+  background: #58c4dc;
   border-radius: 3px;
   cursor: grab;
   color: #fafafa;
@@ -195,7 +195,7 @@ tr:nth-child(even) {
   color: #f7f7f7;
   border-radius: 0.4rem;
   cursor: pointer;
-  
+
 }
 
 
@@ -211,9 +211,7 @@ tr:nth-child(even) {
     overflow: auto;
   }
 
-  .table-container table {
-    /* width: 100%; */
-  }
+ 
 
   .boxes {
     width: 90vw;
@@ -249,6 +247,7 @@ tr:nth-child(even) {
   }
 
   .pivot-table {
+
     background-color: #16181d;
     display: block;
     /* color: #16181d; */

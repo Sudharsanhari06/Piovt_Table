@@ -15,7 +15,11 @@ const PivotTable = ({
       <div style={{ color: "gray", marginTop: 20 }}>
         Drag at least 1 Row, 1 Column and 1 Value.
       </div>
-    );
+    );}
+
+    
+  const windowPrint = () => {
+    window.print();
   }
 
   // 1) Build unique row-keys and col-keys
@@ -70,9 +74,10 @@ const PivotTable = ({
     rowKeys.reduce((sum, rk) => sum + aggregate(pivot[rk][ck]), 0)
   );
   const grandTotal = rowTotals.reduce((a, b) => a + b, 0);
-  
+
   return (
     <div className="pivot-table">
+
       <table>
         <thead>
           <tr>
@@ -114,6 +119,8 @@ const PivotTable = ({
           </tr>
         </tfoot>
       </table>
+      <button onClick={windowPrint} className="print-btn">Print</button>
+
     </div>
   );
 };
