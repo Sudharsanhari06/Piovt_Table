@@ -30,7 +30,7 @@ const PivotTable = ({
     ),
   ];
 
-  // 2) Initialize pivot structure
+
   const pivot = {};
   rowKeys.forEach((rk) => {
     pivot[rk] = {};
@@ -39,7 +39,7 @@ const PivotTable = ({
     });
   });
 
-  // 3) Fill pivot with numeric values
+
   data.forEach((item) => {
     const rk = rows.map((r) => item[r]).join(" | ");
     const ck = columns.map((c) => item[c]).join(" | ");
@@ -48,7 +48,7 @@ const PivotTable = ({
     if (!isNaN(num)) pivot[rk][ck].push(num);
   });
 
-  // 4) Aggregation function
+  // Aggregation function
   const aggregate = (arr) => {
     if (aggregation === "Sum") {
       return arr.reduce((a, b) => a + b, 0);
@@ -70,7 +70,7 @@ const PivotTable = ({
     rowKeys.reduce((sum, rk) => sum + aggregate(pivot[rk][ck]), 0)
   );
   const grandTotal = rowTotals.reduce((a, b) => a + b, 0);
-
+  
   return (
     <div className="pivot-table">
       <table>
@@ -118,3 +118,5 @@ const PivotTable = ({
   );
 };
 export default PivotTable;
+
+

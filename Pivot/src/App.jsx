@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import PivotTable from "./PivotTable";
+import Loader from "./Loader";
 import "./App.css";
 
 const App = () => {
@@ -11,15 +12,23 @@ const App = () => {
   const [columns, setColumns] = useState([]);
   const [values, setValues] = useState([]);
   const [aggregation, setAggregation] = useState("Sum");
+  const [loading, setLoading] = useState(false);
+  // const[print,setPrinr]=useState(false);
 
+
+const windowPrint=()=>{
+  window.print();
+}
 
   const handleCSVUpload = (e) => {
     const file = e.target.files[0];
+    setLoading(true);
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
         setData(results.data);
+        setLoading(false);
         setFields(
           Object.keys(results.data[0]).filter((f) => f !== "__parsed_extra")
         );
@@ -28,19 +37,21 @@ const App = () => {
         setValues([]);
       },
     });
+
+
   };
 
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-  
+
     if (!destination) return; // If dropped outside, do nothing
 
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
-  
+
     const sourceList = getListById(source.droppableId);
     const destinationList = getListById(destination.droppableId);
-  
+
     const [movedItem] = sourceList.splice(source.index, 1); // remove item from source
     destinationList.splice(destination.index, 0, movedItem); // add item to destination
 
@@ -50,7 +61,7 @@ const App = () => {
     setColumns([...columns]);
     setValues([...values]);
   };
-  
+
   // helper to get correct list by id
   const getListById = (id) => {
     switch (id) {
@@ -68,7 +79,7 @@ const App = () => {
   };
 
 
-  
+
   const removeItem = (section, fieldName) => {
     if (section === "rows") {
       setRows(prev => prev.filter(f => f !== fieldName));
@@ -79,16 +90,20 @@ const App = () => {
     if (section === "values") {
       setValues(prev => prev.filter(f => f !== fieldName));
     }
-    setFields(prev => [...prev, fieldName]); // <-- important: Add back to Fields
+    setFields(prev => [...prev, fieldName]);
   };
-  
+
 
 
   return (
     <div className="app-container">
-     <h2>CSV Table To Pivot Table</h2>
-    <input type="file" accept=".csv" onChange={handleCSVUpload} />
 
+      <h2>CSV Table To Pivot Table</h2>
+      <input type="file" accept=".csv" onChange={handleCSVUpload} />
+      
+      {/* loader */}
+        {loading && <Loader />}
+        
       {/* Show simple table preview */}
       {data.length > 0 && (
         <section className="csv-preview">
@@ -119,17 +134,18 @@ const App = () => {
       )}
 
       {/* Drag and drop pivot section */}
-  
+
       {data.length > 0 && (
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="boxes">
+
             {/* Fields */}
             <Droppable droppableId="fields">
               {(provided) => (
                 <div className="box" ref={provided.innerRef} {...provided.droppableProps}>
                   <h4>Fields</h4>
                   {fields.map((f, i) => (
-              <Draggable key={f} draggableId={f}    index={i}>
+                    <Draggable key={f} draggableId={f} index={i}>
                       {(prov) => (
                         <div
                           ref={prov.innerRef}
@@ -175,7 +191,7 @@ const App = () => {
             {/* Columns */}
             <Droppable droppableId="columns">
               {(provided) => (
-                <div className="box" ref={provided.innerRef} {...provided.droppableProps}>
+                <div className="box" ref={provided.innerRef} {...provided.droppableProps}  >
                   <h4>Columns</h4>
                   {columns.map((f, i) => (
                     <Draggable key={f} draggableId={f} index={i}>
@@ -239,8 +255,9 @@ const App = () => {
             columns={columns}
             values={values}
             aggregation={aggregation}
-            showTotals={true} 
+            showTotals={true}
           />
+        <button onClick={windowPrint} className="print-btn">Print</button>
         </DragDropContext>
       )}
     </div>
