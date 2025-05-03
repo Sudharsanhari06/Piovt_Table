@@ -15,14 +15,15 @@ const PivotTable = ({
       <div style={{ color: "gray", marginTop: 20 }}>
         Drag at least 1 Row, 1 Column and 1 Value.
       </div>
-    );}
+    );
+  }
 
-    
+
   const windowPrint = () => {
     window.print();
   }
 
-  //   unique row and col
+  // unique row and col
   const rowKeys = [
     ...new Set(
       data.map((item) => rows.map((r) => item[r]).join(" | "))
@@ -51,6 +52,7 @@ const PivotTable = ({
     const num = Number(raw);
     if (!isNaN(num)) pivot[rk][ck].push(num);
   });
+
 
   // Aggregation function
   const aggregate = (arr) => {
@@ -120,10 +122,7 @@ const PivotTable = ({
         </tfoot>
       </table>
       <button onClick={windowPrint} className="print-btn">Print</button>
-
     </div>
   );
 };
 export default PivotTable;
-
-

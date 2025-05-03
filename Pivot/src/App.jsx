@@ -15,8 +15,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   // const[print,setPrinr]=useState(false);
 
-
-
   const handleCSVUpload = (e) => {
     const file = e.target.files[0];
     setLoading(true);
@@ -90,8 +88,6 @@ const App = () => {
     setFields(prev => [...prev, fieldName]);
   };
 
-
-
   return (
     <div className="app-container">
 
@@ -100,6 +96,8 @@ const App = () => {
 
       {/* loader */}
       {loading && <Loader />}
+
+
 
       {/* Show simple table preview */}
       {data.length > 0 && (
