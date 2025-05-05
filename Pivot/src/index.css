@@ -30,7 +30,8 @@ input[type="file"] {
   background-color: #23272f;
   transition: 0.8s all ease-in-out;
 }
-input[type="file"]:hover{
+
+input[type="file"]:hover {
   box-shadow: 0px 0px 9px #58c4dc;
 }
 
@@ -41,15 +42,19 @@ section {
   /* background-color: #f7f7f7; */
   background-color: #23272f;
 }
+
 input[type="file"] {
   margin-bottom: 1rem;
 }
+
 h2 {
   margin-top: 1.5rem;
 }
+
 .csv-preview h2 {
   margin-bottom: 0.5rem;
 }
+
 .table-container {
   overflow: auto;
   background-color: transparent;
@@ -174,10 +179,6 @@ tr:nth-child(even) {
   animation: spin 1s linear infinite;
 }
 
-
-
-
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -197,9 +198,7 @@ tr:nth-child(even) {
   color: #f7f7f7;
   border-radius: 0.4rem;
   cursor: pointer;
-
 }
-
 
 @media (max-width:750px) {
   .app-container {
@@ -213,7 +212,6 @@ tr:nth-child(even) {
     overflow: auto;
   }
 
- 
 
   .boxes {
     width: 90vw;

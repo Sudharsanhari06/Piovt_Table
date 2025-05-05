@@ -18,7 +18,6 @@ const PivotTable = ({
     );
   }
 
-
   const windowPrint = () => {
     window.print();
   }
@@ -43,7 +42,6 @@ const PivotTable = ({
       pivot[rk][ck] = [];
     });
   });
-
 
   data.forEach((item) => {
     const rk = rows.map((r) => item[r]).join(" | ");
@@ -79,8 +77,7 @@ const PivotTable = ({
 
   return (
     <div className="pivot-table">
-
-      <table>
+      {/* <table>
         <thead>
           <tr>
             <th >{rows.join(", ")}</th>
@@ -120,7 +117,79 @@ const PivotTable = ({
             </td>
           </tr>
         </tfoot>
+      </table> */}
+      <table>
+        {/* <thead>
+          <tr>
+            {rows.map((r) => (
+              <th key={r}>{r}</th>
+            ))}
+            {colKeys.map((ck) => (
+              <th key={ck}>{ck}</th>
+            ))}
+            <th>Row Total</th>
+          </tr>
+        </thead> */}
+        <thead>
+          {/* First row: row fields + top-level column groups */}
+          <tr>
+            {rows.map((r) => (
+              <th key={r} rowSpan={columns.length}>{r}</th>
+            ))}
+            {(() => {
+              const topLevelHeaders = [...new Set(colKeys.map(ck => ck.split(" | ")[0]))];
+              return topLevelHeaders.map(name => {
+                const colSpan = colKeys.filter(ck => ck.startsWith(name + " |")).length;
+                return <th key={name} colSpan={colSpan}>{name}</th>;
+              });
+            })()}
+            <th rowSpan={columns.length}>Row Total</th>
+          </tr>
+
+          {/* Second row: sub-group headers (only if more than one column field) */}
+          <tr>
+    {colKeys.map((ck, i) => {
+      const subHeader = ck.split(" | ")[1]; // Date
+      return <th key={`sub-${i}`}>{subHeader}</th>;
+    })}
+  </tr>
+        
+        </thead>
+
+        <tbody>
+          {rowKeys.map((rk, ri) => {
+            const rowValues = rk.split(" | ");
+            return (
+              <tr key={rk}>
+                {rowValues.map((v, i) => (
+                  <td key={i}>{v}</td>
+                ))}
+                {colKeys.map((ck) => (
+                  <td key={ck}>
+                    {aggregate(pivot[rk][ck]).toFixed(0)}
+                  </td>
+                ))}
+                <td>{rowTotals[ri].toFixed(0)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={rows.length}>Column Total</td>
+            {colTotals.map((ct, i) => (
+              <td key={i} >
+                {ct.toFixed(0)}
+              </td>
+            ))}
+            <td>
+              {grandTotal.toFixed(0)}
+            </td>
+          </tr>
+        </tfoot>
       </table>
+
+
       <button onClick={windowPrint} className="print-btn">Print</button>
     </div>
   );

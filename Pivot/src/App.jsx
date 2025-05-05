@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Papa from "papaparse";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
@@ -96,8 +97,6 @@ const App = () => {
 
       {/* loader */}
       {loading && <Loader />}
-
-
 
       {/* Show simple table preview */}
       {data.length > 0 && (
