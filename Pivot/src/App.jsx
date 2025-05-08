@@ -14,7 +14,6 @@ const App = () => {
   const [values, setValues] = useState([]);
   const [aggregation, setAggregation] = useState("Sum");
   const [loading, setLoading] = useState(false);
-  // const[print,setPrinr]=useState(false);
 
   const handleCSVUpload = (e) => {
     const file = e.target.files[0];
@@ -33,8 +32,6 @@ const App = () => {
         setValues([]);
       },
     });
-
-
   };
 
 
@@ -75,7 +72,6 @@ const App = () => {
   };
 
 
-
   const removeItem = (section, fieldName) => {
     if (section === "rows") {
       setRows(prev => prev.filter(f => f !== fieldName));
@@ -98,7 +94,7 @@ const App = () => {
       {/* loader */}
       {loading && <Loader />}
 
-      {/* Show simple table preview */}
+      {/* Show table preview */}
       {data.length > 0 && (
         <section className="csv-preview">
           <h2>CSV Data Preview</h2>
@@ -128,12 +124,11 @@ const App = () => {
       )}
 
       {/* Drag and drop pivot section */}
-
       {data.length > 0 && (
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="boxes">
 
-            {/* Fields */}
+            {/* fields */}
             <Droppable droppableId="fields">
               {(provided) => (
                 <div className="box" ref={provided.innerRef} {...provided.droppableProps}>
@@ -157,7 +152,7 @@ const App = () => {
               )}
             </Droppable>
 
-            {/* Rows */}
+            {/* rows */}
             <Droppable droppableId="rows">
               {(provided) => (
                 <div className="box" ref={provided.innerRef} {...provided.droppableProps}>
@@ -182,7 +177,7 @@ const App = () => {
               )}
             </Droppable>
 
-            {/* Columns */}
+            {/* columns */}
             <Droppable droppableId="columns">
               {(provided) => (
                 <div className="box" ref={provided.innerRef} {...provided.droppableProps}  >
@@ -240,7 +235,6 @@ const App = () => {
                 </div>
               )}
             </Droppable>
-
           </div>
           {/* Pivot Table with Row and Column Totals */}
           <PivotTable

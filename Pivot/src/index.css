@@ -14,7 +14,6 @@ body {
 .app-container {
   width: 90%;
   margin: auto;
-
 }
 
 h2 {
@@ -80,11 +79,12 @@ td {
 th {
   background-color: #58c4dc;
   font-weight: bold;
+  text-align: center;
   color: #16181d;
 }
 
 tr:nth-child(even) {
-  /* background-color: #fafafa; */
+  background-color: #23272f;
 }
 
 .boxes {
