@@ -87,12 +87,16 @@ const App = () => {
 
   return (
     <div className="app-container">
-
+      
       <h2>CSV Table To Pivot Table</h2>
       <input type="file" accept=".csv" onChange={handleCSVUpload} />
 
       {/* loader */}
       {loading && <Loader />}
+
+    <div className="app-container__tables">
+
+ 
 
       {/* Show table preview */}
       {data.length > 0 && (
@@ -247,6 +251,7 @@ const App = () => {
           />
         </DragDropContext>
       )}
+         </div>
     </div>
   );
 };

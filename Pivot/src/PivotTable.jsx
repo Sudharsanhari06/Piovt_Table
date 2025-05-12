@@ -3,13 +3,13 @@ import "./App.css";
 
 const PivotTable = ({ data, rows, columns, values, aggregation }) => {
   if (!data.length) return null;
+
   if (!rows.length || !columns.length || !values.length) {
     return (
       <div style={{ color: "gray", marginTop: 20 }}>
         Drag at least 1 Row, 1 Column and 1 Value.
       </div>
-    );
-  }
+    );}
 
   const windowPrint = () => {
     window.print();
@@ -53,6 +53,7 @@ const PivotTable = ({ data, rows, columns, values, aggregation }) => {
   const rowTotals = rowKeys.map((rk) =>
     colKeys.reduce((sum, ck) => sum + aggregate(pivot[rk][ck]), 0)
   );
+
   const colTotals = colKeys.map((ck) =>
     rowKeys.reduce((sum, rk) => sum + aggregate(pivot[rk][ck]), 0)
   );
@@ -62,10 +63,10 @@ const PivotTable = ({ data, rows, columns, values, aggregation }) => {
     <div className="pivot-table">
       <table>
         <thead>
-          {/* Dynamically render header rows based on number of column levels */}
           {Array.from({ length: columns.length }).map((_, level) => (
             <tr key={`header-row-${level}`}>
               {/* Row field headers only in the first row */}
+
               {level === 0 &&
                 rows.map((r, i) => (
                   <th key={`row-header-${i}`} rowSpan={columns.length}>
@@ -82,14 +83,14 @@ const PivotTable = ({ data, rows, columns, values, aggregation }) => {
                 );
               })}
 
-              {/* Row total header in the first header row */}
+              {/* Row total header in the first header row */}  
               {level === 0 && (
                 <th rowSpan={columns.length}>Row Total</th>
               )}
             </tr>
           ))}
         </thead>
-        
+
         <tbody>
           {rowKeys.map((rk, ri) => {
             const rowValues = rk.split(" | ");

@@ -5,7 +5,6 @@
 }
 
 body {
-  /* background-color: #0a0919; */
   font-family: Arial, Helvetica, sans-serif;
   background-color: #16181d;
   color: #f7f7f7;
@@ -14,6 +13,7 @@ body {
 .app-container {
   width: 90%;
   margin: auto;
+  /* display: flex; */
 }
 
 h2 {
@@ -32,6 +32,12 @@ input[type="file"] {
 
 input[type="file"]:hover {
   box-shadow: 0px 0px 9px #58c4dc;
+}
+
+.app-container__tables{
+  /* display: flex;
+  justify-content: space-between; */
+
 }
 
 /* table */
@@ -68,8 +74,7 @@ table {
   width: 100%;
 }
 
-th,
-td {
+th,td{
   padding: 10px;
   border: 2px solid #ddd;
   text-align: left;
@@ -139,31 +144,6 @@ tr:nth-child(even) {
 .close-btn:hover {
   color: darkred;
 }
-
-/* .pivot-table {
-  width: 85vw;
-  height: auto;
-  margin: 1rem auto;
-  overflow: scroll;
-  padding: 0.9rem 0.5rem;
-}
-
-.pivot-table table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-}
-
-.pivot-table table th {
-  background-color: #6180ec;
-}
-
-.pivot-table th,
-.pivot-table td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-} */
 
 /* loader */
 .loader {
